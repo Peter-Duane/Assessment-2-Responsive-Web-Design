@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family:Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family:Teko:wght@300..700&family:Urbanist:ital,wght@0,100..900;1,100..900&display:swap');
+
+body{
+  margin:0;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 435px) {
+  #logo{display:none;}
+  #start_button{
+    text-decoration: none;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;  
+    color:black;
+  }
+
+  .start_button{  
+    padding:10px;
+    border-radius: 7px;
+    max-width: 150px;
+  }
+
+  .main{
+    display:grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    margin:20px;
+    justify-items: center;
+  }
+
+  #menu_img, #menu_img2, #add_more_task{
+    width: 40px;
+    height: auto;
+    margin: 10px;
+  }
+
+  #menu_img{grid-column:1/2;}
+
+  #add_more_task{
+    grid-column:3/4;
+    margin:20px;
+    display:none;
+  }
+
+  #no_task {
+    grid-column: 2/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; 
+    margin-top:40px;
+    text-align: center;
+  }
+
+  #illustration {
+    width: 200px;
+    margin-bottom: 1rem;
+  }
+
+  #add_task {
+    margin-top: 20px;
+    font-family: "Lato", sans-serif;
+    font-size: 20px;    
+    color:white;
+    background-color: #e77c7c;
+    border-radius: 10px;
+    padding: 10px;     
+    cursor: pointer;
+  }
+
+  #add_task:hover {
+    opacity: 0.8;
+  }
+
+  #schedule {
+    grid-column: 2/3;
+    width:100%;
+    max-width: 90vw; 
+    display: none;/*it changes after a certain event is done*/
+  }
+
+  #schedule { /*contanier for the tasks*/
+    max-height: 70vh;        
+    overflow-y: auto;        
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+
+  .task {
+    display: grid;
+    grid-template-columns: auto 2fr;
+    grid-template-areas: /*the period/dot acts as a placeholder*/
+      "text . delete"
+      "meta . . ";
+    background: none;
+    padding: 20px;
+    border-top-style: solid;
+    border-width: 1px;
+    margin-bottom: 15px;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box; /*makes tasks the same width and height every time*/
+  }
+
+  .task-delete { /*the check mark*/
+    grid-area: delete;
+    width: 30px;
+    cursor: pointer;
+    margin: 13;
+  }
+
+  .task-text { /*input for text (tasks)*/
+    grid-area: text;
+    border: none;
+    background: transparent;
+    font-family: "Lato", sans-serif;
+    font-size: 20px;
+    outline: none; 
+  }
+
+  .task-meta {
+    grid-area: meta;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .task-meta input { /*input for date and time*/
+    border: none;
+    background: transparent;
+    font-family: "Lato", sans-serif;
+    font-size: 15px;
+    color: #555;
+    outline: none;
+  }
+
+  #add_task {
+    margin-top: 20px;
+    font-family: "Lato", sans-serif;
+    cursor: pointer;
+  }
+
+  #add_task:hover {opacity: 0.8;}
+  .popup-title{font-size:20px;}
+
+  .popup-box {/*the pop up container that appears when the user wants to add tasks*/
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 90%;
+    max-width: 320px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 14px;
+    font-family: "Lato", sans-serif;
+  }
+
+  .popup-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index:10;
+  }
+
+  #popup div {/*popup inner container*/
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: "Lato", sans-serif;
+  }
+
+  #popup_task_text, #popup_task_date, #popup_task_time  {/*inputs inside popup*/
+    font-family: "Lato", sans-serif; /*set input font*/
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 17px;
+  }
+
+  #popup_cancel, #popup_save {/*buttons inside popup */
+    font-family: "Lato", sans-serif; 
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width:49.3%;
+  }
+
+  #popup_save{
+    background-color:#e77c7c;
+    color:white;
+  }
+
+  .popup-datetime {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Menu container */
+  #menu {
+    position: fixed;
+    top: 0;
+    left: -3000px; /* hidden */
+    width: 300px;
+    height: 100%;
+    background: #e77c7c;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+    transition: left 0.1s ease-in-out;
+    z-index: 20;
+    padding: 0px;
+    font-family: "Lato", sans-serif;
+  }
+
+  /* When menu is open */
+  #menu.open {left: 0;}
+  #menu.closed {left:-3000px;}
+
+  .menu-header{
+    display:flex;
+    align-items: center;
+    margin: 30px;
+    margin-top: 15px;
+    font-size: 18px;
+    color:white;
+    gap:130px;
+  }
+
+  #menu_img{transition: transform 0.5s ease;}
+  #menu_img.menu-active {transform: translateX(30px) rotate(180deg);}
+
+  #menu_img2{
+    transition: transform 0.5s ease;
+    transform: translateX(-50px) rotate(0deg);
+  }
+  #menu_img2.menu-active{transform: translateX(0px) rotate(180deg);}
+
+  .menu-list {
+    list-style: none;
+    padding: 0px 20px 0px 20px;
+    margin-left:0;
+    margin-right: 0;
+    color: white;
+  }
+
+  .menu-list li {
+    padding: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left:0;
+    margin-right: 0;
+  }
+
+  .menu-list li:hover {
+    opacity: 0.6;
+    color:#000000;
+    background-color: #ffffff;
+  }
+}
+
+@media (min-width: 865px) { /*desktop*/
+  #schedule{ /*make the width wider*/
+    width:700px;
+    max-width: 90%;
+    height:auto;
+  }
+
+  .task{
+    grid-template-areas: 
+    "text . delete"
+    "meta . .";
+    grid-template-rows: 2fr 1fr;
+  }
+
+  #no_task, #schedule{margin-left:300px;}
+
+  #add_task{font-size: 16px;}
+  #add_more_task{width:50px;}
+
+  .popup-box{max-width:500px;}
+  .task-text {font-size:30px;}
+  .task-meta input {font-size:20px;}
+  .task-delete {
+    width:35px;
+    align-self: center;
+  }
+
+  #menu{left:0;}
+
+  #logo{ /*display the logo in desktop*/
+    display:block;
+    max-width:150px;
+    margin:40px;
+  }
+
+  #menu_img, #menu_img2, .menu-header{display:none;} /*remove the unnecessary elements in menu*/
+  #menu{
+    background-color: #ffffff;
+    box-shadow: 2px 0 rgba(0,0,0,0.15);
+    border-left:5px;
+    z-index: 5;
+  }
+  .menu-list{color:#000000}
+  .menu-list li{
+    font-size: 16px;
+    padding:20px;
+    border-bottom: 2px solid #4233334b;
+  }
+
+  .menu-list li:last-child{border-bottom: none;}
+  .menu-list li:hover {
+    color:#000000;
+    background-color: #dfaaaa4b;
+  }
+}
